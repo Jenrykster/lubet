@@ -149,7 +149,7 @@ main {
     margin: 0.3rem;
 }
 .save-button {
-    width: 16.1rem;
+    width: calc(100% + 2rem);
     height: 4rem;
     margin-left: -1rem;
     border: #E2E2E2 1px solid;
