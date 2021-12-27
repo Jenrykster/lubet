@@ -20,8 +20,8 @@ header {
 }
 
 .bottom {
-    position: absolute;
-    bottom: 0;
+    margin-top: auto;
+    margin-bottom: -1rem;
 }
 .center {
     display: flex;
@@ -121,6 +121,9 @@ main {
 }
 
 .cart{
+    display: flex;
+    flex-direction: column;
+    height: min-content;
     width: 25%;
     background-color: snow;
     border: #E2E2E2 1px solid;
@@ -131,6 +134,7 @@ main {
 .cart-item-container {
     display: flex;
     align-items: center;
+    margin-bottom: 1.5rem;
 }
 .purple {
     color: #7F3992;
