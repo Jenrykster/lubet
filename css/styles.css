@@ -16,6 +16,11 @@ header {
     box-shadow: 0px 5px 5px #EBEBEB;
 }
 
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .header-group {
     display: flex;
     align-items: center;
@@ -38,4 +43,65 @@ header {
 .title-bottom-line{
     border-bottom: #B5C401 6px solid;
     border-radius: 4px;
+}
+
+main {
+    padding: 3rem;
+}
+
+.bet-selector {
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    color: #27C383;
+    border: #27C383 1px solid;
+    padding: 1.3rem;
+    background-color: transparent;
+    font-weight: bold;
+    border-radius: 1rem;
+    margin-right: 1rem;
+}
+
+.primary {
+    background-color: #27C383;
+    color: snow;
+    padding: 0.5rem 1.3rem;
+    width: 10rem;
+    margin-left: auto;
+}
+.button-group {
+    margin-top: 1rem;
+}
+
+.button-selector {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background-color: transparent;
+    border: #7F3992 1px solid;
+    color: #7F3992;
+    font-style: italic;
+    font-weight: bold;
+    margin: 0px 0.3rem;
+}
+
+.number-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    width: 60%;
+    row-gap: 0.5rem;
+}
+
+.circle-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ADC0C4;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    color: snow;
+    text-align: center;
+    font-size: larger;
 }
