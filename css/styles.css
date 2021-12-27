@@ -1,0 +1,41 @@
+/* Importa a fonte */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,700;0,800;1,500&display=swap');
+
+body {
+    font-family: 'Work Sans', sans-serif;
+    color: #707070;
+    background-color: #F7F7F7;
+    margin: 0px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 7%;
+    box-shadow: 0px 5px 5px #EBEBEB;
+}
+
+.header-group {
+    display: flex;
+    align-items: center;
+}
+.header-link {
+    font-style: italic;
+    margin: 0.5rem 1rem;
+    font-size: medium;
+    transition: 0.1s ease-in;
+}
+.hover-line:hover {
+    border-bottom: #B5C401 2px solid;
+    cursor: pointer;
+}
+
+.header-title{
+    font-size: 2rem;
+}
+
+.title-bottom-line{
+    border-bottom: #B5C401 6px solid;
+    border-radius: 4px;
+}
