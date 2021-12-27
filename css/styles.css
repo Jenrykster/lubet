@@ -16,6 +16,10 @@ header {
     box-shadow: 0px 5px 5px #EBEBEB;
 }
 
+.bottom {
+    position: absolute;
+    bottom: 0;
+}
 .center {
     display: flex;
     align-items: center;
@@ -46,7 +50,13 @@ header {
 }
 
 main {
+    display: flex;
     padding: 3rem;
+    gap: 1rem;
+}
+
+.bet-area {
+    width: 65%;
 }
 
 .bet-selector {
@@ -91,6 +101,7 @@ main {
     grid-template-columns: repeat(10, 1fr);
     width: 60%;
     row-gap: 0.5rem;
+    gap: 0.2rem;
 }
 
 .circle-text {
@@ -104,4 +115,45 @@ main {
     color: snow;
     text-align: center;
     font-size: larger;
+}
+
+.cart{
+    width: 25%;
+    background-color: snow;
+    border: #E2E2E2 1px solid;
+    border-radius: 10px;
+    padding: 1rem;
+    position: relative;
+}
+.cart-item-container {
+    display: flex;
+    align-items: center;
+}
+.purple {
+    color: #7F3992;
+}
+.cart-items{
+    margin-left: 1rem;
+    padding-left: 0.5rem;
+    border-left: #7F3992 3px solid;
+    border-radius: 4px;
+}
+.cart-items p{
+    margin: 0.3rem;
+}
+.save-button {
+    width: 16.1rem;
+    height: 4rem;
+    margin-left: -1rem;
+    border: #E2E2E2 1px solid;
+    border-radius: 0px 0px 10px 10px;
+    justify-content: center;
+    color: #27C383;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: #F4F4F4;
+}
+.save-button span{
+    margin-left: 0.3rem;
+    font-size: large;
 }
