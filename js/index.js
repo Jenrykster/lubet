@@ -109,27 +109,28 @@ function createSelectableNumber(number){
 }
 
 function toggleNumberSelection(number, event){
-    console.log(selectedNumbers);
     if(selectedNumbers.length < selectedGameRules['max-number']){
         number.classList.toggle('active');
-        selectedNumbers.push(number.dataset.number);
+        selectedNumbers.push(parseInt(number.dataset.number));
     }else{
-        alert('Quantidade máxima de números atingida');
+        //alert('Quantidade máxima de números atingida');
     }
 }
 
 function completeBet(){
     let numbers = selectedNumbers.concat(generateRandomNumbers());
-     
+    
     updateNumberGrid();
+    
+    selectedNumbers = numbers;
     for(let number of numbers){
         toggleNumberSelection($numberGrid.children.item(number-1));
     }
 }
 
 function generateRandomNumbers(){
-    let numbersGenerated = [];
-    const maxNumbers = selectedGameRules['max-number'] - selectedNumbers.length;
+    let numbersGenerated = selectedNumbers;
+    const maxNumbers = selectedGameRules['max-number'];
     const range = selectedGameRules.range;
 
     for(let i = 1; numbersGenerated.length < maxNumbers; i++){
