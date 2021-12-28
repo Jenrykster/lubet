@@ -30,31 +30,21 @@
     </header>
     <main>
         <div class="bet-area">
-            <p><i><b>NEW BET</b> FOR MEGA-SENA</i></p>
+            <p id="selected-game-text"><i><b>NEW BET</b> FOR MEGA-SENA</i></p>
             <form class="bet-selector">
                 <label>Choose a game</label>
-                <div class="button-group">
-                    <button class="button-selector">Lotofácil</button>
-                    <button class="button-selector">Mega-Sena</button>
-                    <button class="button-selector">Lotomania</button>
+                <div id="game-selector" class="button-group">
+                    <button class="button-selector" type="button" data-type="Lotofácil">Lotofácil</button>
+                    <button class="button-selector" type="button" data-type="Mega-Sena">Mega-Sena</button>
+                    <button class="button-selector" type="button" data-type="Quina">Lotomania</button>
                 </div>
             </form>
             <p><i><b>Fill your bet</b></i></p>
-            <p>Mark as many numbers as you want up to a maximum of 50.
+            <p id="description">Mark as many numbers as you want up to a maximum of 50.
                 Win by hitting 15, 16, 16, 18, 19, 20 or none of the 20 numbers draw.
             </p>
-            <div class="number-grid">
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
-                <div class="circle-text">01</div>
+            <div id="number-grid" class="number-grid">
+            <!-- Adicionar números via JS -->
             </div>
 
             <div class="button-group center">
@@ -89,5 +79,6 @@
     <footer>
         <p>Copyright 2020 Luby Software</p>
     </footer>
+    <script src="js/index.js"></script>
 </body>
 </html>

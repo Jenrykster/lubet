@@ -89,14 +89,22 @@ main {
 }
 
 .button-selector {
+    --main-color: #7F3992;
+    --second-color: snow;
     padding: 0.5rem 1rem;
     border-radius: 20px;
     background-color: transparent;
-    border: #7F3992 1px solid;
-    color: #7F3992;
+    border: var(--main-color) 1px solid;
+    color: var(--main-color);
     font-style: italic;
     font-weight: bold;
     margin: 0px 0.3rem;
+}
+
+.button-selector:hover {
+    color: var(--second-color) !important ;
+    background-color: var(--main-color);
+    cursor: pointer;
 }
 
 .number-grid {
@@ -108,6 +116,7 @@ main {
 }
 
 .circle-text {
+    --main-color: #ADC0C4;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -118,6 +127,20 @@ main {
     color: snow;
     text-align: center;
     font-size: larger;
+}
+
+.circle-text:hover {
+    background-color: #99A0C4;
+    cursor: pointer;
+}
+
+.active {
+    background-color: var(--main-color);
+    color:snow;
+}
+/* Overwrite circle-text hover color*/ 
+.active:hover {
+    background-color: var(--main-color);
 }
 
 .cart{
