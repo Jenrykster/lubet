@@ -50,10 +50,15 @@ function setupButtons(){
 }
 
 function changeSelectedGame(selectedGame, event){
-    changeActiveButton(event.target || event);
-    selectedGameRules = selectedGame;
+    changeActiveButton(event.target || event); // Send button element if it's not an event
 
-    updateNumberGrid();
+    if(selectedGameRules != selectedGame){
+        selectedGameRules = selectedGame;
+        updateNumberGrid();
+    }else{
+        return;
+    }
+    
 }
 function changeActiveButton(button){
 
