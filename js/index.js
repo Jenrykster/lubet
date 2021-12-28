@@ -1,13 +1,8 @@
 let gamesRules;
 let selectedGameRules;
 
-/* 
-let $lotofacilButton = document.querySelector('#lf-button');
-let $megasenaButton = document.querySelector('#ms-button');
-let $lotomaniaButton = document.querySelector('#lm-button');
-*/
-
 let $gameTypeSelector = document.querySelector('#game-selector');
+const $buttons = $gameTypeSelector.children;
 
 let $selectedGameText = document.querySelector('#selected-game-text');
 let $gameDescription = document.querySelector('#description');
@@ -36,14 +31,13 @@ function onRulesRequestUpdate(event){
         gamesRules = response;
 
         setupButtons();
-        changeSelectedGame(gamesRules.types[0]); // Define o jogo padrão quando a aplicação iniciar
+        changeSelectedGame(gamesRules.types[0], $buttons[0]); // Define o jogo padrão quando a aplicação iniciar
         updateNumberGrid();
     }
 }
 
 function setupButtons(){
-    const buttons = $gameTypeSelector.children;
-    for(let button of buttons){
+    for(let button of $buttons){
         let game = button.dataset.type;
         let selectedGame = gamesRules.types.find(el => {
             return el.type == game;
@@ -56,11 +50,18 @@ function setupButtons(){
 }
 
 function changeSelectedGame(selectedGame, event){
+    changeActiveButton(event.target || event);
     selectedGameRules = selectedGame;
 
     updateNumberGrid();
 }
+function changeActiveButton(button){
 
+    for(let button of $buttons){
+        button.classList.remove('active');
+    }
+    button.classList.add('active');
+}
 function changeButtonColors(button, color){
     button.style.setProperty('--main-color', color);
 }
@@ -88,11 +89,11 @@ function createSelectableNumber(number){
     element.dataset.number = number;
     element.innerHTML = numberText;
     
-    element.style.setProperty('--active-color', selectedGameRules.color);
+    element.style.setProperty('--main-color', selectedGameRules.color);
 
     element.addEventListener('click', ev => {
-        ev.target.classList.toggle('number-active');
+        ev.target.classList.toggle('active');
     })
-    
+
     return element;
 }

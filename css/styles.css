@@ -116,7 +116,7 @@ main {
 }
 
 .circle-text {
-    --active-color: #ADC0C4;
+    --main-color: #ADC0C4;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -134,12 +134,13 @@ main {
     cursor: pointer;
 }
 
-.number-active {
-    background-color: var(--active-color);
+.active {
+    background-color: var(--main-color);
+    color:snow;
 }
 /* Overwrite circle-text hover color*/ 
-.number-active:hover {
-    background-color: var(--active-color);
+.active:hover {
+    background-color: var(--main-color);
 }
 
 .cart{
