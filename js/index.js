@@ -1,12 +1,15 @@
 let gamesRules;
 let selectedGameRules;
-
+let selectedNumbers = [];
 let $gameTypeSelector = document.querySelector('#game-selector');
 const $buttons = $gameTypeSelector.children;
 
 let $selectedGameText = document.querySelector('#selected-game-text');
 let $gameDescription = document.querySelector('#description');
 let $numberGrid = document.querySelector('#number-grid');
+
+let $completeButton = document.querySelector('#complete');
+let $clearButton = document.querySelector('#clear');
 
 init()
 
@@ -47,6 +50,9 @@ function setupButtons(){
 
         button.addEventListener('click', changeSelectedGame.bind(event, selectedGame));
     }
+
+    $completeButton.addEventListener('click', completeBet);
+    $clearButton.addEventListener('click', updateNumberGrid);
 }
 
 function changeSelectedGame(selectedGame, event){
@@ -72,6 +78,7 @@ function changeButtonColors(button, color){
 }
 
 function updateNumberGrid(){
+    selectedNumbers = [];
     $selectedGameText.innerHTML = `<i><b>NEW BET</b> FOR ${selectedGameRules.type.toUpperCase()}</i>`;
     $gameDescription.innerHTML = selectedGameRules.description;
     $numberGrid.innerHTML = '';
@@ -96,9 +103,48 @@ function createSelectableNumber(number){
     
     element.style.setProperty('--main-color', selectedGameRules.color);
 
-    element.addEventListener('click', ev => {
-        ev.target.classList.toggle('active');
-    })
+    element.addEventListener('click', toggleNumberSelection.bind(event, element));
 
     return element;
+}
+
+function toggleNumberSelection(number, event){
+    if(selectedNumbers.includes(parseInt(number.dataset.number))){
+        number.classList.toggle('active');
+        let id = selectedNumbers.findIndex(n => {
+            return n == number.dataset.number;
+        })
+        selectedNumbers.splice(id);
+    }
+    else if(selectedNumbers.length < selectedGameRules['max-number']){
+        number.classList.toggle('active');
+        selectedNumbers.push(parseInt(number.dataset.number));
+    }else{
+        alert('Quantidade máxima de números atingida');
+    }
+}
+
+function completeBet(){
+    let numbers = generateRandomNumbers();
+    
+    updateNumberGrid();
+
+    for(let number of numbers){
+        toggleNumberSelection($numberGrid.children.item(number-1));
+    }
+}
+
+function generateRandomNumbers(){
+    let numbersGenerated = selectedNumbers;
+    const maxNumbers = selectedGameRules['max-number'];
+    const range = selectedGameRules.range;
+
+    for(let i = 1; numbersGenerated.length < maxNumbers; i++){
+        let randomNumber = Math.floor(Math.random() * (range - 1)) + 1; // Previne que o número seja 0
+        if(!numbersGenerated.includes(randomNumber) && randomNumber != 0){
+            numbersGenerated.push(randomNumber);
+        }
+    }
+
+    return numbersGenerated;
 }
