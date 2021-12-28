@@ -160,15 +160,21 @@ function generateRandomNumbers(){
 }
 
 function addNumbersToCart(){
-    let bet = {
-        type: selectedGameRules.type,
-        numbers: selectedNumbers,
-        price: selectedGameRules.price,
-        color: selectedGameRules.color
+    if(selectedNumbers.length != selectedGameRules['max-number']){
+        let numbersMissing = selectedGameRules['max-number'] - selectedNumbers.length
+        alert(`Escolha mais ${numbersMissing} ${numbersMissing > 1 ? 'números' : 'número'}!`);
+
+    }else{
+        let bet = {
+            type: selectedGameRules.type,
+            numbers: selectedNumbers,
+            price: selectedGameRules.price,
+            color: selectedGameRules.color,
+        }
+        itemsOnCart.push(bet);
+        updateNumberGrid();
+        updateCart();
     }
-    itemsOnCart.push(bet);
-    updateNumberGrid();
-    updateCart();
 }
 
 function updateCart(){
@@ -190,6 +196,7 @@ function newCartElement(betData){
     let deleteButton = document.createElement('span');
     deleteButton.innerHTML = 'delete';
     deleteButton.classList.add('material-icons');
+    deleteButton.addEventListener('click', deleteSelfItem.bind(event, betData));
 
     let itemInfo = document.createElement('div');
     itemInfo.classList.add('cart-items');
@@ -207,6 +214,14 @@ function newCartElement(betData){
     item.appendChild(itemInfo);
 
     return item;
+}
+
+function deleteSelfItem(bet, event){
+    let id = itemsOnCart.findIndex(item => {
+        return item == bet;
+    })
+    itemsOnCart.splice(id, 1);
+    updateCart();
 }
 
 function formatREAL(value){
