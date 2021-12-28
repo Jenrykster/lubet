@@ -42,8 +42,7 @@ function setupButtons(){
             return el.type == game;
         });
 
-        button.style.color = selectedGame.color;
-        button.style.border = `${selectedGame.color} 1px solid`;
+        changeButtonColors(button, selectedGame.color);
 
         button.addEventListener('click', changeSelectedGame.bind(event, selectedGame));
     }
@@ -53,4 +52,19 @@ function changeSelectedGame(selectedGame, event){
     selectedGameRules = selectedGame;
 
     console.log(selectedGameRules);
+}
+
+function changeButtonColors(button, color){
+    button.style.color = color;
+    button.style.border = `${color} 1px solid`;
+
+    button.addEventListener('mouseover', ev => {
+        button.style.color = 'snow';
+        button.style.backgroundColor = color;
+        button.style.cursor = 'pointer';
+    })
+    button.addEventListener('mouseleave', ev => {
+        button.style.color = color;
+        button.style.backgroundColor = 'transparent';
+    })
 }
