@@ -1,6 +1,8 @@
 let gamesRules;
 let selectedGameRules;
 let selectedNumbers = [];
+let itemsOnCart = [];
+
 let $gameTypeSelector = document.querySelector('#game-selector');
 const $buttons = $gameTypeSelector.children;
 
@@ -10,6 +12,11 @@ let $numberGrid = document.querySelector('#number-grid');
 
 let $completeButton = document.querySelector('#complete');
 let $clearButton = document.querySelector('#clear');
+
+let $addToCart = document.querySelector('#cart-button');
+
+let $cart = document.querySelector('#cart-items');
+let $totalPrice = document.querySelector('#total');
 
 init()
 
@@ -36,6 +43,7 @@ function onRulesRequestUpdate(event){
         setupButtons();
         changeSelectedGame(gamesRules.types[0], $buttons[0]); // Define o jogo padrão quando a aplicação iniciar
         updateNumberGrid();
+        updateCart();
     }
 }
 
@@ -53,6 +61,8 @@ function setupButtons(){
 
     $completeButton.addEventListener('click', completeBet);
     $clearButton.addEventListener('click', updateNumberGrid);
+
+    $addToCart.addEventListener('click', addNumbersToCart);
 }
 
 function changeSelectedGame(selectedGame, event){
@@ -114,7 +124,7 @@ function toggleNumberSelection(number, event){
         let id = selectedNumbers.findIndex(n => {
             return n == number.dataset.number;
         })
-        selectedNumbers.splice(id);
+        selectedNumbers.splice(id, 1);
     }
     else if(selectedNumbers.length < selectedGameRules['max-number']){
         number.classList.toggle('active');
@@ -147,4 +157,73 @@ function generateRandomNumbers(){
     }
 
     return numbersGenerated;
+}
+
+function addNumbersToCart(){
+    if(selectedNumbers.length != selectedGameRules['max-number']){
+        let numbersMissing = selectedGameRules['max-number'] - selectedNumbers.length
+        alert(`Escolha mais ${numbersMissing} ${numbersMissing > 1 ? 'números' : 'número'}!`);
+
+    }else{
+        let bet = {
+            type: selectedGameRules.type,
+            numbers: selectedNumbers,
+            price: selectedGameRules.price,
+            color: selectedGameRules.color,
+        }
+        itemsOnCart.push(bet);
+        updateNumberGrid();
+        updateCart();
+    }
+}
+
+function updateCart(){
+    let totalPrice = 0;
+
+    $cart.innerHTML = ''; // Limpa o carrinho
+    for(let cartItem of itemsOnCart){
+        $cart.appendChild(newCartElement(cartItem));
+        totalPrice += cartItem.price;
+    }
+
+    $totalPrice.innerHTML = `<b><i>CART</i></b> TOTAL: ${formatREAL(totalPrice)}`;
+}
+
+function newCartElement(betData){
+    let item = document.createElement('div');
+    item.classList.add('cart-item-container');
+
+    let deleteButton = document.createElement('span');
+    deleteButton.innerHTML = 'delete';
+    deleteButton.classList.add('material-icons');
+    deleteButton.addEventListener('click', deleteSelfItem.bind(event, betData));
+
+    let itemInfo = document.createElement('div');
+    itemInfo.classList.add('cart-items');
+    itemInfo.style.setProperty('--main-color', betData.color);
+
+    let numbers = document.createElement('p');
+    numbers.innerHTML = betData.numbers.join(', ');
+    itemInfo.appendChild(numbers);
+
+    let price = document.createElement('p');
+    price.innerHTML = `<b class="bold">${betData.type}</b> ${formatREAL(betData.price)}`;
+    itemInfo.appendChild(price);
+
+    item.appendChild(deleteButton);
+    item.appendChild(itemInfo);
+
+    return item;
+}
+
+function deleteSelfItem(bet, event){
+    let id = itemsOnCart.findIndex(item => {
+        return item == bet;
+    })
+    itemsOnCart.splice(id, 1);
+    updateCart();
+}
+
+function formatREAL(value){
+    return value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 }

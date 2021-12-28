@@ -164,13 +164,17 @@ main {
     align-items: center;
     margin-bottom: 1.5rem;
 }
-.purple {
-    color: #7F3992;
+.cart-item-container span:hover{
+    cursor: pointer;
+}
+.bold {
+    color: var(--main-color);
 }
 .cart-items{
+    --main-color: #7F3992;
     margin-left: 1rem;
     padding-left: 0.5rem;
-    border-left: #7F3992 3px solid;
+    border-left: var(--main-color) 3px solid;
     border-radius: 4px;
 }
 .cart-items p{
