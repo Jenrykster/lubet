@@ -124,7 +124,7 @@ function toggleNumberSelection(number, event){
         let id = selectedNumbers.findIndex(n => {
             return n == number.dataset.number;
         })
-        selectedNumbers.splice(id);
+        selectedNumbers.splice(id, 1);
     }
     else if(selectedNumbers.length < selectedGameRules['max-number']){
         number.classList.toggle('active');
