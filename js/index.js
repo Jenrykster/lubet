@@ -10,6 +10,7 @@ let $lotomaniaButton = document.querySelector('#lm-button');
 let $gameTypeSelector = document.querySelector('#game-selector');
 
 let $selectedGameText = document.querySelector('#selected-game-text');
+let $gameDescription = document.querySelector('#description');
 let $numberGrid = document.querySelector('#number-grid');
 
 init()
@@ -57,7 +58,7 @@ function setupButtons(){
 function changeSelectedGame(selectedGame, event){
     selectedGameRules = selectedGame;
 
-    console.log(selectedGameRules);
+    updateNumberGrid();
 }
 
 function changeButtonColors(button, color){
@@ -77,6 +78,7 @@ function changeButtonColors(button, color){
 
 function updateNumberGrid(){
     $selectedGameText.innerHTML = `<i><b>NEW BET</b> FOR ${selectedGameRules.type.toUpperCase()}</i>`;
+    $gameDescription.innerHTML = selectedGameRules.description;
     $numberGrid.innerHTML = '';
 
     generateGridNumbers(selectedGameRules.range);
