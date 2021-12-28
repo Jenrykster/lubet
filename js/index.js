@@ -62,18 +62,7 @@ function changeSelectedGame(selectedGame, event){
 }
 
 function changeButtonColors(button, color){
-    button.style.color = color;
-    button.style.border = `${color} 1px solid`;
-
-    button.addEventListener('mouseover', ev => {
-        button.style.color = 'snow';
-        button.style.backgroundColor = color;
-        button.style.cursor = 'pointer';
-    })
-    button.addEventListener('mouseleave', ev => {
-        button.style.color = color;
-        button.style.backgroundColor = 'transparent';
-    })
+    button.style.setProperty('--main-color', color);
 }
 
 function updateNumberGrid(){
