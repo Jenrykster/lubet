@@ -5,6 +5,7 @@ let $lotofacilButton = document.querySelector('#lf-button');
 let $megasenaButton = document.querySelector('#ms-button');
 let $lotomaniaButton = document.querySelector('#lm-button');
 */
+
 let gameTypeSelector = document.querySelector('#game-selector');
 
 init()
@@ -28,18 +29,21 @@ function onRulesRequestUpdate(event){
     if(request.readyState == 4 && request.status == 200){
         let response = JSON.parse(request.responseText);
         gamesRules = response;
-        updateButtons();
+        setupButtons();
     }
 }
 
-function updateButtons(){
+function setupButtons(){
     const buttons = gameTypeSelector.children;
     for(let button of buttons){
         let game = button.dataset.type;
-        let gameColor = gamesRules.types.find(el => {
+        let selectedGame = gamesRules.types.find(el => {
             return el.type == game;
-        }).color;
-        button.style.color = gameColor;
-        button.style.border = `${gameColor} 1px solid`
+        });
+
+        button.style.color = selectedGame.color;
+        button.style.border = `${gameColor} 1px solid`;
+
+        
     }
 }
