@@ -15,6 +15,9 @@ let $clearButton = document.querySelector('#clear');
 
 let $addToCart = document.querySelector('#cart-button');
 
+let $cart = document.querySelector('#cart-items');
+let $totalPrice = document.querySelector('#total');
+
 init()
 
 function init(){
@@ -40,6 +43,7 @@ function onRulesRequestUpdate(event){
         setupButtons();
         changeSelectedGame(gamesRules.types[0], $buttons[0]); // Define o jogo padrão quando a aplicação iniciar
         updateNumberGrid();
+        updateCart();
     }
 }
 
@@ -159,8 +163,52 @@ function addNumbersToCart(){
     let bet = {
         type: selectedGameRules.type,
         numbers: selectedNumbers,
-        price: selectedGameRules.price
+        price: selectedGameRules.price,
+        color: selectedGameRules.color
     }
     itemsOnCart.push(bet);
     updateNumberGrid();
+    updateCart();
+}
+
+function updateCart(){
+    let totalPrice = 0;
+
+    $cart.innerHTML = ''; // Limpa o carrinho
+    for(let cartItem of itemsOnCart){
+        $cart.appendChild(newCartElement(cartItem));
+        totalPrice += cartItem.price;
+    }
+
+    $totalPrice.innerHTML = `<b><i>CART</i></b> TOTAL: ${formatREAL(totalPrice)}`;
+}
+
+function newCartElement(betData){
+    let item = document.createElement('div');
+    item.classList.add('cart-item-container');
+
+    let deleteButton = document.createElement('span');
+    deleteButton.innerHTML = 'delete';
+    deleteButton.classList.add('material-icons');
+
+    let itemInfo = document.createElement('div');
+    itemInfo.classList.add('cart-items');
+    itemInfo.style.setProperty('--main-color', betData.color);
+
+    let numbers = document.createElement('p');
+    numbers.innerHTML = betData.numbers.join(', ');
+    itemInfo.appendChild(numbers);
+
+    let price = document.createElement('p');
+    price.innerHTML = `<b class="bold">${betData.type}</b> ${formatREAL(betData.price)}`;
+    itemInfo.appendChild(price);
+
+    item.appendChild(deleteButton);
+    item.appendChild(itemInfo);
+
+    return item;
+}
+
+function formatREAL(value){
+    return value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 }
