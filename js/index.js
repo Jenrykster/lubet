@@ -8,6 +8,9 @@ let $selectedGameText = document.querySelector('#selected-game-text');
 let $gameDescription = document.querySelector('#description');
 let $numberGrid = document.querySelector('#number-grid');
 
+let $completeButton = document.querySelector('#complete');
+let $clearButton = document.querySelector('#clear');
+
 init()
 
 function init(){
@@ -47,6 +50,9 @@ function setupButtons(){
 
         button.addEventListener('click', changeSelectedGame.bind(event, selectedGame));
     }
+
+    $completeButton.addEventListener('click', completeBet);
+    $clearButton.addEventListener('click', updateNumberGrid);
 }
 
 function changeSelectedGame(selectedGame, event){
@@ -96,9 +102,30 @@ function createSelectableNumber(number){
     
     element.style.setProperty('--main-color', selectedGameRules.color);
 
-    element.addEventListener('click', ev => {
-        ev.target.classList.toggle('active');
-    })
+    element.addEventListener('click', toggleNumberSelection);
 
     return element;
+}
+
+function toggleNumberSelection(event){
+    event.target.classList.toggle('active');
+}
+
+function completeBet(){
+    let numbers = generateRandomNumbers();
+}
+
+function generateRandomNumbers(){
+    let numbersGenerated = [];
+    const maxNumbers = selectedGameRules['max-number'];
+    const range = selectedGameRules.range;
+
+    for(let i = 1; numbersGenerated.length < maxNumbers; i++){
+        let randomNumber = Math.floor(Math.random() * (range - 1)) + 1; // Previne que o número seja 0
+        if(!numbersGenerated.includes(randomNumber) && randomNumber != 0){
+            numbersGenerated.push(randomNumber);
+        }
+    }
+
+    return numbersGenerated;
 }
