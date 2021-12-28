@@ -1,6 +1,6 @@
 let gamesRules;
 let selectedGameRules;
-
+let selectedNumbers = [];
 let $gameTypeSelector = document.querySelector('#game-selector');
 const $buttons = $gameTypeSelector.children;
 
@@ -78,6 +78,7 @@ function changeButtonColors(button, color){
 }
 
 function updateNumberGrid(){
+    selectedNumbers = [];
     $selectedGameText.innerHTML = `<i><b>NEW BET</b> FOR ${selectedGameRules.type.toUpperCase()}</i>`;
     $gameDescription.innerHTML = selectedGameRules.description;
     $numberGrid.innerHTML = '';
@@ -102,22 +103,33 @@ function createSelectableNumber(number){
     
     element.style.setProperty('--main-color', selectedGameRules.color);
 
-    element.addEventListener('click', toggleNumberSelection);
+    element.addEventListener('click', toggleNumberSelection.bind(event, element));
 
     return element;
 }
 
-function toggleNumberSelection(event){
-    event.target.classList.toggle('active');
+function toggleNumberSelection(number, event){
+    console.log(selectedNumbers);
+    if(selectedNumbers.length < selectedGameRules['max-number']){
+        number.classList.toggle('active');
+        selectedNumbers.push(number.dataset.number);
+    }else{
+        alert('Quantidade máxima de números atingida');
+    }
 }
 
 function completeBet(){
-    let numbers = generateRandomNumbers();
+    let numbers = selectedNumbers.concat(generateRandomNumbers());
+     
+    updateNumberGrid();
+    for(let number of numbers){
+        toggleNumberSelection($numberGrid.children.item(number-1));
+    }
 }
 
 function generateRandomNumbers(){
     let numbersGenerated = [];
-    const maxNumbers = selectedGameRules['max-number'];
+    const maxNumbers = selectedGameRules['max-number'] - selectedNumbers.length;
     const range = selectedGameRules.range;
 
     for(let i = 1; numbersGenerated.length < maxNumbers; i++){
