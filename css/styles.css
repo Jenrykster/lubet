@@ -164,6 +164,9 @@ main {
     align-items: center;
     margin-bottom: 1.5rem;
 }
+.cart-item-container span:hover{
+    cursor: pointer;
+}
 .bold {
     color: var(--main-color);
 }
