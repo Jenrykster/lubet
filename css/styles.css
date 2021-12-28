@@ -131,6 +131,7 @@ main {
     color: snow;
     text-align: center;
     font-size: larger;
+    user-select: none;
 }
 
 .circle-text:hover {
