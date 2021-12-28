@@ -9,6 +9,9 @@ let $lotomaniaButton = document.querySelector('#lm-button');
 
 let gameTypeSelector = document.querySelector('#game-selector');
 
+let $selectedGameText = document.querySelector('#selected-game-text');
+let $numberGrid = document.querySelector('#number-grid');
+
 init()
 
 function init(){
@@ -30,7 +33,10 @@ function onRulesRequestUpdate(event){
     if(request.readyState == 4 && request.status == 200){
         let response = JSON.parse(request.responseText);
         gamesRules = response;
+
         setupButtons();
+        changeSelectedGame(gamesRules.types[0]); // Define o jogo padrão quando a aplicação iniciar
+        updateNumberGrid();
     }
 }
 
@@ -67,4 +73,37 @@ function changeButtonColors(button, color){
         button.style.color = color;
         button.style.backgroundColor = 'transparent';
     })
+}
+
+function updateNumberGrid(){
+    $selectedGameText.innerHTML = `<i><b>NEW BET</b> FOR ${selectedGameRules.type.toUpperCase()}</i>`;
+    $numberGrid.innerHTML = '';
+
+    generateGridNumbers(selectedGameRules.range);
+}
+
+function generateGridNumbers(maxNumber){
+    for(let i = 1; i <= maxNumber; i++){
+        let actualNumberEl = createSelectableNumber(i);
+        $numberGrid.appendChild(actualNumberEl);
+    }
+}
+
+function createSelectableNumber(number){
+    let element = document.createElement('div');
+    let numberText = number.toString().padStart(2, '0');
+
+    element.classList.add('circle-text');
+    element.dataset.number = number;
+    element.innerHTML = numberText;
+
+    element.addEventListener('mouseover', ev => {
+        ev.target.style.backgroundColor = '#99A0C4';
+        ev.target.style.cursor = 'pointer';
+    })
+    element.addEventListener('mouseleave', ev => {
+        ev.target.style.backgroundColor = '#ADC0C4';
+    })
+
+    return element;
 }
