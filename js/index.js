@@ -1,6 +1,8 @@
 let gamesRules;
 let selectedGameRules;
 let selectedNumbers = [];
+let itemsOnCart = [];
+
 let $gameTypeSelector = document.querySelector('#game-selector');
 const $buttons = $gameTypeSelector.children;
 
@@ -10,6 +12,8 @@ let $numberGrid = document.querySelector('#number-grid');
 
 let $completeButton = document.querySelector('#complete');
 let $clearButton = document.querySelector('#clear');
+
+let $addToCart = document.querySelector('#cart-button');
 
 init()
 
@@ -53,6 +57,8 @@ function setupButtons(){
 
     $completeButton.addEventListener('click', completeBet);
     $clearButton.addEventListener('click', updateNumberGrid);
+
+    $addToCart.addEventListener('click', addNumbersToCart);
 }
 
 function changeSelectedGame(selectedGame, event){
@@ -147,4 +153,14 @@ function generateRandomNumbers(){
     }
 
     return numbersGenerated;
+}
+
+function addNumbersToCart(){
+    let bet = {
+        type: selectedGameRules.type,
+        numbers: selectedNumbers,
+        price: selectedGameRules.price
+    }
+    itemsOnCart.push(bet);
+    updateNumberGrid();
 }
