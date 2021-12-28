@@ -1,4 +1,5 @@
 let gamesRules;
+let selectedGameRules;
 
 /* 
 let $lotofacilButton = document.querySelector('#lf-button');
@@ -42,8 +43,14 @@ function setupButtons(){
         });
 
         button.style.color = selectedGame.color;
-        button.style.border = `${gameColor} 1px solid`;
+        button.style.border = `${selectedGame.color} 1px solid`;
 
-        
+        button.addEventListener('click', changeSelectedGame.bind(event, selectedGame));
     }
+}
+
+function changeSelectedGame(selectedGame, event){
+    selectedGameRules = selectedGame;
+
+    console.log(selectedGameRules);
 }
