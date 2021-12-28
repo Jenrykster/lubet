@@ -87,14 +87,12 @@ function createSelectableNumber(number){
     element.classList.add('circle-text');
     element.dataset.number = number;
     element.innerHTML = numberText;
+    
+    element.style.setProperty('--active-color', selectedGameRules.color);
 
-    element.addEventListener('mouseover', ev => {
-        ev.target.style.backgroundColor = '#99A0C4';
-        ev.target.style.cursor = 'pointer';
+    element.addEventListener('click', ev => {
+        ev.target.classList.toggle('number-active');
     })
-    element.addEventListener('mouseleave', ev => {
-        ev.target.style.backgroundColor = '#ADC0C4';
-    })
-
+    
     return element;
 }
