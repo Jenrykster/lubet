@@ -7,7 +7,7 @@ let $megasenaButton = document.querySelector('#ms-button');
 let $lotomaniaButton = document.querySelector('#lm-button');
 */
 
-let gameTypeSelector = document.querySelector('#game-selector');
+let $gameTypeSelector = document.querySelector('#game-selector');
 
 let $selectedGameText = document.querySelector('#selected-game-text');
 let $numberGrid = document.querySelector('#number-grid');
@@ -41,7 +41,7 @@ function onRulesRequestUpdate(event){
 }
 
 function setupButtons(){
-    const buttons = gameTypeSelector.children;
+    const buttons = $gameTypeSelector.children;
     for(let button of buttons){
         let game = button.dataset.type;
         let selectedGame = gamesRules.types.find(el => {
