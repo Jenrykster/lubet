@@ -76,7 +76,11 @@ main {
     border-radius: 1rem;
     margin-right: 1rem;
 }
-
+.button:hover {
+    cursor: pointer;
+    background-color: #27C383;
+    color: snow;
+}
 .primary {
     background-color: #27C383;
     color: snow;
