@@ -28,6 +28,17 @@ header {
     align-items: center;
     justify-content: space-between;
 }
+.empty-cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #70707090;
+}
+.empty-cart span {
+    font-size: 3rem;
+}
+
 .header-group {
     display: flex;
     align-items: center;

@@ -13,6 +13,7 @@ let $completeButton = document.querySelector('#complete');
 let $clearButton = document.querySelector('#clear');
 
 let $addToCart = document.querySelector('#cart-button');
+let $emptyCartMessage = document.querySelector('#empty-cart');
 
 let $cart = document.querySelector('#cart-items');
 let $totalPrice = document.querySelector('#total');
@@ -190,6 +191,9 @@ function updateCart(){
     let totalPrice = 0;
 
     $cart.innerHTML = ''; // Limpa o carrinho
+
+    $emptyCartMessage.style.display = itemsOnCart.length == 0 ? 'flex' : 'none';
+
     for(let cartItem of itemsOnCart){
         $cart.appendChild(newCartElement(cartItem));
         totalPrice += cartItem.price;
