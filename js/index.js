@@ -3,8 +3,7 @@ let selectedGameRules;
 let selectedNumbers = [];
 let itemsOnCart = [];
 
-let $gameTypeSelector = document.querySelector('#game-selector');
-const $buttons = $gameTypeSelector.children;
+const $buttonContainer = document.querySelector('#game-selector');
 
 let $selectedGameText = document.querySelector('#selected-game-text');
 let $gameDescription = document.querySelector('#description');
@@ -41,28 +40,39 @@ function onRulesRequestUpdate(event){
         gamesRules = response;
 
         setupButtons();
-        changeSelectedGame(gamesRules.types[0], $buttons[0]); // Define o jogo padrão quando a aplicação iniciar
+        changeSelectedGame(gamesRules.types[0], $buttonContainer.children[0]); // Define o jogo padrão quando a aplicação iniciar
         updateNumberGrid();
         updateCart();
     }
 }
 
 function setupButtons(){
-    for(let button of $buttons){
-        let game = button.dataset.type;
-        let selectedGame = gamesRules.types.find(el => {
-            return el.type == game;
-        });
+    for(let game of gamesRules.types){
+        let newButton = createButton(game);
 
-        changeButtonColors(button, selectedGame.color);
+        newButton.addEventListener('click', changeSelectedGame.bind(event, game)); 
 
-        button.addEventListener('click', changeSelectedGame.bind(event, selectedGame));
+        $buttonContainer.appendChild(newButton);
+
     }
 
     $completeButton.addEventListener('click', completeBet);
     $clearButton.addEventListener('click', updateNumberGrid);
 
     $addToCart.addEventListener('click', addNumbersToCart);
+}
+
+function createButton(game){
+    let buttonToReturn = document.createElement('button');
+    buttonToReturn.type = 'button';
+
+    buttonToReturn.classList.add('button-selector');
+    buttonToReturn.dataset.type = game.type;
+    buttonToReturn.innerHTML = game.type;
+
+    buttonToReturn.style.setProperty('--main-color', game.color);
+
+    return buttonToReturn;
 }
 
 function changeSelectedGame(selectedGame, event){
@@ -77,8 +87,7 @@ function changeSelectedGame(selectedGame, event){
     
 }
 function changeActiveButton(button){
-
-    for(let button of $buttons){
+    for(let button of $buttonContainer.children){
         button.classList.remove('active');
     }
     button.classList.add('active');
