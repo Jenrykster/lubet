@@ -3,8 +3,7 @@ let selectedGameRules;
 let selectedNumbers = [];
 let itemsOnCart = [];
 
-let $gameTypeSelector = document.querySelector('#game-selector');
-const $buttons = $gameTypeSelector.children;
+const $buttonContainer = document.querySelector('#game-selector');
 
 let $selectedGameText = document.querySelector('#selected-game-text');
 let $gameDescription = document.querySelector('#description');
@@ -14,6 +13,7 @@ let $completeButton = document.querySelector('#complete');
 let $clearButton = document.querySelector('#clear');
 
 let $addToCart = document.querySelector('#cart-button');
+let $emptyCartMessage = document.querySelector('#empty-cart');
 
 let $cart = document.querySelector('#cart-items');
 let $totalPrice = document.querySelector('#total');
@@ -41,28 +41,39 @@ function onRulesRequestUpdate(event){
         gamesRules = response;
 
         setupButtons();
-        changeSelectedGame(gamesRules.types[0], $buttons[0]); // Define o jogo padrão quando a aplicação iniciar
+        changeSelectedGame(gamesRules.types[0], $buttonContainer.children[0]); // Define o jogo padrão quando a aplicação iniciar
         updateNumberGrid();
         updateCart();
     }
 }
 
 function setupButtons(){
-    for(let button of $buttons){
-        let game = button.dataset.type;
-        let selectedGame = gamesRules.types.find(el => {
-            return el.type == game;
-        });
+    for(let game of gamesRules.types){
+        let newButton = createButton(game);
 
-        changeButtonColors(button, selectedGame.color);
+        newButton.addEventListener('click', changeSelectedGame.bind(event, game)); 
 
-        button.addEventListener('click', changeSelectedGame.bind(event, selectedGame));
+        $buttonContainer.appendChild(newButton);
+
     }
 
     $completeButton.addEventListener('click', completeBet);
     $clearButton.addEventListener('click', updateNumberGrid);
 
     $addToCart.addEventListener('click', addNumbersToCart);
+}
+
+function createButton(game){
+    let buttonToReturn = document.createElement('button');
+    buttonToReturn.type = 'button';
+
+    buttonToReturn.classList.add('button-selector');
+    buttonToReturn.dataset.type = game.type;
+    buttonToReturn.innerHTML = game.type;
+
+    buttonToReturn.style.setProperty('--main-color', game.color);
+
+    return buttonToReturn;
 }
 
 function changeSelectedGame(selectedGame, event){
@@ -77,8 +88,7 @@ function changeSelectedGame(selectedGame, event){
     
 }
 function changeActiveButton(button){
-
-    for(let button of $buttons){
+    for(let button of $buttonContainer.children){
         button.classList.remove('active');
     }
     button.classList.add('active');
@@ -160,11 +170,20 @@ function generateRandomNumbers(){
 }
 
 function addNumbersToCart(){
+    selectedNumbers = selectedNumbers.sort((a,b)=> {
+        return a-b;
+    })
+
+    let duplicate = isDuplicate(selectedNumbers);
+
     if(selectedNumbers.length != selectedGameRules['max-number']){
         let numbersMissing = selectedGameRules['max-number'] - selectedNumbers.length
         alert(`Escolha mais ${numbersMissing} ${numbersMissing > 1 ? 'números' : 'número'}!`);
-
-    }else{
+    }
+    else if(duplicate){
+        alert('Você já fez essa aposta !');
+    }
+    else{
         let bet = {
             type: selectedGameRules.type,
             numbers: selectedNumbers,
@@ -181,6 +200,9 @@ function updateCart(){
     let totalPrice = 0;
 
     $cart.innerHTML = ''; // Limpa o carrinho
+
+    $emptyCartMessage.style.display = itemsOnCart.length == 0 ? 'flex' : 'none';
+
     for(let cartItem of itemsOnCart){
         $cart.appendChild(newCartElement(cartItem));
         totalPrice += cartItem.price;
@@ -222,6 +244,18 @@ function deleteSelfItem(bet, event){
     })
     itemsOnCart.splice(id, 1);
     updateCart();
+}
+
+function isDuplicate(numbers){
+    return itemsOnCart.some(bet => {
+        if(bet.type == selectedGameRules.type){
+            let sameNumbers = bet.numbers.every((betNumber, index) => {
+                return betNumber == numbers[index];
+            })
+
+            return sameNumbers;
+        }  
+    })
 }
 
 function formatREAL(value){
