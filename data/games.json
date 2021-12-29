@@ -36,9 +36,9 @@
     {
       "type": "Joãobet",
       "description": "Escolha 10 números dos 11 disponíveis, acerte todos. Um sorteio por década.",
-      "range": 10,
+      "range": 11,
       "price": 1000,
-      "max-number": 11,
+      "max-number": 10,
       "color": "#5627c3"
     }
   ]
