@@ -24,6 +24,22 @@
       "price": 2,
       "max-number": 5,
       "color": "#F79C31"
+    },
+    {
+      "type": "Lubet",
+      "description": "Escolha 2 números dos 50 disponíveis. São dois sorteios anuais.",
+      "range": 50,
+      "price": 100,
+      "max-number": 2,
+      "color": "#c32746"
+    },
+    {
+      "type": "Joãobet",
+      "description": "Escolha 10 números dos 11 disponíveis, acerte todos. Um sorteio por década.",
+      "range": 10,
+      "price": 1000,
+      "max-number": 11,
+      "color": "#5627c3"
     }
   ]
 }
