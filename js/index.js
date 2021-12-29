@@ -170,11 +170,20 @@ function generateRandomNumbers(){
 }
 
 function addNumbersToCart(){
+    selectedNumbers = selectedNumbers.sort((a,b)=> {
+        return a-b;
+    })
+
+    let duplicate = isDuplicate(selectedNumbers);
+
     if(selectedNumbers.length != selectedGameRules['max-number']){
         let numbersMissing = selectedGameRules['max-number'] - selectedNumbers.length
         alert(`Escolha mais ${numbersMissing} ${numbersMissing > 1 ? 'números' : 'número'}!`);
-
-    }else{
+    }
+    else if(duplicate){
+        alert('Você já fez essa aposta !');
+    }
+    else{
         let bet = {
             type: selectedGameRules.type,
             numbers: selectedNumbers,
@@ -235,6 +244,18 @@ function deleteSelfItem(bet, event){
     })
     itemsOnCart.splice(id, 1);
     updateCart();
+}
+
+function isDuplicate(numbers){
+    return itemsOnCart.some(bet => {
+        if(bet.type == selectedGameRules.type){
+            let sameNumbers = bet.numbers.every((betNumber, index) => {
+                return betNumber == numbers[index];
+            })
+
+            return sameNumbers;
+        }  
+    })
 }
 
 function formatREAL(value){
