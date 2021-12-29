@@ -27,7 +27,7 @@ function init(){
 function getRules(){
     const rulesRequest = new XMLHttpRequest();
 
-    rulesRequest.open('get', 'http://127.0.0.1:5500/data/games.json')
+    rulesRequest.open('get', 'https://jenrykster.github.io/lubet/data/games.json')
 
     rulesRequest.onreadystatechange = onRulesRequestUpdate;
 
